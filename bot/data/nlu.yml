@@ -1,0 +1,294 @@
+version: "2.0"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hallo
+      - hi
+      - hallu
+      - Guten Morgen
+      - Guten Abend
+      - Guten Mittag
+      - moin
+      - Was geht?
+      - huhu
+      - Hallöchen
+      - Grüß Gott
+      - Servus
+
+  - intent: goodbye
+    examples: |
+      - Schönen Abend noch
+      - tschüss
+      - bis dann
+      - man sieht sich
+      - ciao
+      - bye
+      - goodbye
+      - schönen Tag noch
+      - bye bye
+      - auf Wiedersehen
+      - Bis bald
+      - see you later, alligator
+      - ade
+      - Adieu
+
+  - intent: affirm
+    examples: |
+      - yes
+      - y
+      - In der Tat
+      - Natürlich
+      - Das klingt gut
+      - korrekt
+      - positiv
+      - ja
+      - jo
+      - sicher
+      - klar
+
+  - intent: deny
+    examples: |
+      - no
+      - n
+      - never
+      - nein
+      - das mag ich nicht
+      - keines wegs
+      - nicht wirklich
+      - niemals
+      - negativ
+
+  - intent: mood_great
+    examples: |
+      - perfekt
+      - gut
+      - hervorragend
+      - wunderbar
+      - Ich fühle mich sehr gut
+      - Mir gehts gut
+      - Ich fühle mich toll
+      - extrem gut
+      - sehr gut
+      - toll
+      - grandios
+      - exzellent
+      - ausgezeichnet
+
+  - intent: mood_unhappy
+    examples: |
+      - Mein Tag war schlecht
+      - Ich bin traurig
+      - Ich fühle mich nicht gut
+      - Ich fühle mich schlecht
+      - Ich bin enttäuscht
+      - sehr traurig
+      - traurig
+      - Ich bin depressiv
+      - unglücklich
+      - nicht gut
+      - extrem traurig
+      - Mir geht es nicht gut
+      - schlecht
+
+  - intent: bot_challenge
+    examples: |
+      - Bist du ein Bot?
+      - Bist du ein Mensch?
+      - Spreche ich mit einem Bot?
+      - Spreche ich mit einem Menschen?
+
+  - intent: show_creator
+    examples: |
+      - Wer hat dich erschaffen?
+      - Wer hat dich programmiert?
+      - Wie bist du entstanden?
+      - Wer hat dich entwickelt?
+      - Wo kommst du her?
+      - Wer hat dich gemacht?
+      - Wer sind deine Eltern?
+
+  # Feedback Flow
+
+  - intent: satisfaction_intent
+    examples: |
+      - Du bist toll
+      - Du bist klug
+      - Ich mag dich
+      - Ich liebe dich
+      - Du kennst die Lösung auf alle Fragen
+      - Feedback
+      - Danke für deine Unterstützung
+      - Vielen Dank
+      - Danke dir
+      - Thanks
+      - thx
+      - Thank you
+      - dange
+      - Dankeschön
+      - Du bist hilfreich
+      - Das hat mir geholfen
+      - Bewertung
+
+  - intent: dissatisfaction_intent
+    examples: |
+      - Du bist dumm
+      - Ich hasse dich
+      - Du kannst nichts
+      - Du Idiot
+      - Du bist kacke
+      - Du bist scheiße
+      - Du bist schlecht
+      - Du bist unnötig
+      - Du bist nutzlos
+      - Du kannst nicht viel
+
+  # Help Flow
+
+  - intent: help_intent
+    examples: |
+      - Hilfe
+      - Help
+      - Was kannst du?
+      - Kannst du mir helfen?
+      - Wie kannst du mir helfen?
+      - Was sind deine Funktionalitäten?
+      - Ich brauche Hilfe
+      - Ich benötige Hilfe
+      - Was kannst du eigentlich?
+      - Was machst du?
+      - Wie kannst du mich unterstützen?
+      - Was sind deine Aufgaben?
+      - Wofür bist du da?
+      - Zu was kannst du mir etwas erzählen?
+      - Nenne mir Dinge, die du kannst.
+      - Wofür bist du da?
+      - Ich komme nicht weiter
+      - Ich bin Ratlos
+      - Ich weiß nicht weiter
+      - Wie funktioniert das hier?
+      - Wie funktionierst du?
+
+  - intent: show_categories
+    examples: |
+      - Welche Kategorien gibt es?
+      - Kategorien
+      - Kategorie
+      - Zeige mir alle Kategorien
+      - Zu welchen Daten kannst du mir etwas erzählen?
+      - Zu welchen Kategorien kannst du mir etwas erzählen?
+      - Welche Kategorien existieren?
+      - Was für Kategorien gibt es?
+      - Was gibt es für Kategorien?
+      - Zu welchen Daten kannst du mir was sagen?
+      - Was für Daten gibt es?
+      - Was für Sensordaten gibt es?
+
+  - intent: show_tags
+    examples: |
+      - Welche Tags gibt es?
+      - Tags
+      - Zeige mir alle Tags
+      - Zu welchen Tags kannst du mir etwas erzählen?
+      - Welche Tags existieren?
+      - Was für Tags gibt es?
+      - Was gibt es für Tags?
+      - Welche Tags kennst du?
+      - Stichwörter
+      - Schlagwörter
+      - Label
+
+  # News flow
+
+  - intent: show_news
+    examples: |
+      - Neuigkeiten?
+      - Gibt es Neuigkeiten?
+      - Was ist neu?
+      - Hat sich an den Daten etwas verändert?
+      - Hat sich an den Datensätzen etwas verändert?
+      - Gibt es Veränderungen?
+      - Was hat sich seit letztem Mal verändert?
+      - Gibt es etwas Neues?
+      - Welche Veränderungen gab es?
+      - Zeig mir Veränderungen
+      - News
+      - Änderungen
+      - Welche Datensätze sind neu?
+      - Was sind aktuelle Datensätze?
+      - Was sind aktuelle Daten?
+      - Was hat sich geändert?
+
+  # lorapark_hochwassersensor flow
+
+  - intent: show_current_water_level_danube
+    examples: |
+      - Wie hoch steht die Donau?
+      - Wie hoch ist der Wasserlevel der Donau?
+      - Bei wie viel Meter steht die Donau?
+      - Wie hoch ist der Wasserspiegel der Donau?
+      - Wasserspiegel der Donau
+      - Wasserpegel der Donau
+      - Wie hoch ist der Wasserpegel der Donau?
+      - Was für eine Höhe hat die Donau?
+
+  - intent: is_bike_path_flooded
+    examples: |
+      - Ist der Radweg an der Donau überflutet?
+      - Ist die Donau übergelaufen?
+      - Hat die Donau Hochwasser?
+      - Ist der Radweg an der Donau befahrbar?
+      - Ist der Fahrradweg überflutet?
+      - Ist die Fußgängerbrücke an der Donau überflutet?
+      - Ist die Herdbrücke geöffnet?
+      - Ist der Radweg der Herdbrücke geöffnet?
+
+  # besuchertrend-ulmer-innenstadt flow
+
+  - intent: show_current_visitors_downtown_ulm
+    examples: |
+      - Wie viele Besucher hat die Ulmer Innenstadt?
+      - Wie viele besuchen momentan die Ulmer Innenstadt?
+      - Wie viele Personen sind im WLAN der Ulmer Innenstadt?
+      - Wie viele Menschen sind in der Innenstadt?
+      - Sind gerade viele Menschen in der Innenstadt?
+      - Wie viele Menschen sind auf der Hirschstraße?
+      - Wie viele Besucher hat die Hirschstraße?
+      - Wie viele Menschen sind auf dem Münsterplatz?
+      - Wie viele Besucher hat der Münstplatz?
+
+  # show random fact (based on the available datasets listed above)
+
+  - intent: show_random_fact
+    examples: |
+      - Erzähle mir etwas
+      - Erzähl mir was
+      - Nenne mir einen Fakt
+      - Zeige mir ein Beispiel
+      - Erzähle mir irgendetwas
+      - Zeige mir einen random fact
+      - Gib mir eine zuällige Information
+      - Gib mir irgendeine Information
+      - Gib mir irgendeinen Fakt
+      - Überrasch mich
+      - Wissenswertes
+
+  # Analytical flows
+
+  - intent: call_for_analytical_graph
+    examples: |
+      - Analytische Methoden
+      - Analytische Modelle
+      - Statistische Berechnungen
+      - Analytische Berechnungen
+      - Statistik
+      - Statistiken
+      - Generiere mir eine Grafik zu den Sensordaten
+      - Zeige mir kompakte Informationen zu Sensordaten
+      - Zeige mir Statistiken zu den Daten
+      - Auswertungen
+      - Statistische Auswertungen
+      - Zeige mir analytische Auswertungen
+      - Analyse
+      - Berechnung

@@ -1,0 +1,134 @@
+version: "2.0"
+
+stories:
+
+  # standard stories
+
+  - story: happy path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_great
+      - action: utter_happy
+
+  - story: sad path 1
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: affirm
+      - action: utter_happy
+
+  - story: sad path 2
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: mood_unhappy
+      - action: utter_cheer_up
+      - action: utter_did_that_help
+      - intent: deny
+      - action: utter_end_conversation_no_interest
+      - action: utter_end_conversation_mail
+      - action: utter_end_conversation_tel
+
+  - story: show creator
+    steps:
+      - intent: show_creator
+      - action: utter_show_creator
+
+  # Help stories
+
+  - story: help yes intent
+    steps:
+      - intent: help_intent
+      - action: utter_help
+      - intent: yes_help_intent
+      - action: show_categories_action
+
+  - story: help no intent
+    steps:
+      - intent: help_intent
+      - action: utter_help
+      - intent: no_help_intent
+      - action: utter_no_help_answer
+      - action: utter_offer_more_help
+
+  - story: show all categories
+    steps:
+      - intent: show_categories
+      - action: show_categories_action
+      - intent: display_dataset_by_category
+      - action: display_dataset_by_category_action
+
+  - story: show dataset description
+    steps:
+      - intent: display_dataset_description
+      - action: display_dataset_description_action
+      - action: utter_offer_more_help
+
+  - story: show all tags
+    steps:
+      - intent: show_tags
+      - action: show_tags_action
+      - intent: display_dataset_by_tag
+      - action: display_dataset_by_tag_action
+
+  - story: show 10 more tags
+    steps:
+      - intent: show_more_tags
+      - action: show_tags_action
+      - intent: display_dataset_by_tag
+      - action: display_dataset_by_tag_action
+
+  # News stories
+
+  - story: show news 7
+    steps:
+      - intent: show_news
+      - action: show_news_action
+
+  - story: show news 30
+    steps:
+      - intent: show_news_30
+      - action: show_news_action
+      - action: utter_offer_more_help
+
+  # lorapark_hochwassersensor stories
+
+  - story: show water level danube
+    steps:
+      - intent: show_current_water_level_danube
+      - action: show_current_water_level_danube_action
+
+  - story: show if danube is flooded
+    steps:
+      - intent: is_bike_path_flooded
+      - action: is_bike_path_flooded_action
+
+  # besuchertrend-ulmer-innenstadt stories
+
+  - story: show current visitors of downtown Ulm
+    steps:
+      - intent: show_current_visitors_downtown_ulm
+      - action: show_current_visitors_downtown_ulm_action
+
+  # Random fact
+
+  - story: show random fact
+    steps:
+      - intent: show_random_fact
+      - action: show_random_fact_action
+
+  # Analytical stories
+
+  - story: path through data until graph generation
+    steps:
+      - intent: call_for_analytical_graph
+      - action: call_for_analytical_graph_action
+      - intent: graph_ask_for_time_range
+      - action: graph_ask_for_time_range_action
+      - intent: create_graphs
+      - action: create_graphs_action
+      - action: utter_offer_more_help

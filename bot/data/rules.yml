@@ -1,0 +1,59 @@
+version: "2.0"
+
+rules:
+
+  # Standard rules
+
+  - rule: starting a conversation
+    steps:
+      - intent: start_conversation
+      - action: utter_start_conversation
+      - action: utter_start_conversation_2
+      - action: utter_start_conversation_3
+
+  - rule: ending a conversation
+    steps:
+      - intent: goodbye
+      - action: utter_end_conversation
+      - action: utter_end_conversation_mail
+      - action: utter_end_conversation_tel
+
+  - rule: nlu fallback
+    steps:
+      - intent: nlu_fallback
+      - action: utter_please_rephrase
+
+  - rule: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  # Feedback rules
+
+  - rule: activate feedback form with satisfaction
+    steps:
+      - intent: satisfaction_intent
+      - action: utter_feedback_satisfaction
+      - action: utter_feedback_explanation
+      - action: feedback_form
+      - active_loop: feedback_form
+
+  - rule: activate feedback form with dissatisfaction
+    steps:
+      - intent: dissatisfaction_intent
+      - action: utter_feedback_dissatisfaction
+      - action: utter_feedback_explanation
+      - action: feedback_form
+      - active_loop: feedback_form
+
+  - rule: submit feedback form
+    condition:
+      - active_loop: feedback_form
+    steps:
+      - action: feedback_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_submit_feedback_form
+      - action: utter_offer_more_help
+      - action: save_feedback_form

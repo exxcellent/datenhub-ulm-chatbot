@@ -1,0 +1,33 @@
+version: '3.0'
+services:
+  rasa:
+    image: rasa/rasa:2.8.16-full
+    networks: ['rasa-network']
+    ports:
+      - "5005:5005"
+    volumes:
+      - "./bot/:/app/"
+    command:
+      - run
+      - --cors
+      - "*"
+      - -m
+      - models
+      - --enable-api
+  action_server:
+    build: .
+    networks: ['rasa-network']
+    volumes:
+      - "./bot/actions:/app/actions"
+    ports:
+      - "5055:5055"
+  web:
+    image: bitnami/apache:2.4.51
+    networks: ['rasa-network']
+    volumes:
+      - ./ui:/app
+    ports:
+      - "80:8080"
+      - "443:8443"
+
+networks: {rasa-network: {}}

@@ -1,0 +1,202 @@
+version: "2.0"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - show_creator
+  - start_conversation
+  - satisfaction_intent
+  - dissatisfaction_intent
+  - help_intent
+  - yes_help_intent
+  - no_help_intent
+  - show_categories
+  - display_dataset_by_category
+  - display_dataset_description
+  - show_tags
+  - display_dataset_by_tag
+  - show_more_tags
+  - show_news
+  - show_news_30
+  - show_current_water_level_danube
+  - is_bike_path_flooded
+  - show_current_visitors_downtown_ulm
+  - show_random_fact
+  - call_for_analytical_graph
+  - graph_ask_for_time_range
+  - create_graphs
+
+actions:
+  - validate_feedback_form
+  - save_feedback_form
+  - show_categories_action
+  - display_dataset_by_category_action
+  - display_dataset_description_action
+  - show_tags_action
+  - display_dataset_by_tag_action
+  - show_news_action
+  - show_current_water_level_danube_action
+  - is_bike_path_flooded_action
+  - show_current_visitors_downtown_ulm_action
+  - show_random_fact_action
+  - call_for_analytical_graph_action
+  - graph_ask_for_time_range_action
+  - create_graphs_action
+
+
+forms:
+  feedback_form:
+    required_slots:
+      feedback_valuation:
+        - type: from_text
+      feedback_comment:
+        - type: from_text
+
+entities:
+  - selected_category
+  - selected_dataset
+  - selected_tag
+  - selected_time_range_for_graph_days
+  - selected_dataset_for_graph
+
+slots:
+  feedback_valuation:
+    type: text
+    influence_conversation: false
+  feedback_comment:
+    type: text
+    influence_conversation: false
+  tags_iteration:
+    type: float
+    influence_conversation: false
+    initial_value: 0
+  news_show_30_days:
+    type: bool
+    influence_conversation: false
+    initial_value: false
+  selected_dataset_for_graph:
+    type: text
+    influence_conversation: false
+  selected_time_range_for_graph_days:
+    type: float
+    influence_conversation: false
+
+  selected_category:
+    type: text
+    influence_conversation: false
+  selected_dataset:
+    type: text
+    influence_conversation: false
+  selected_tag:
+    type: text
+    influence_conversation: false
+
+
+responses:
+
+  # Standard cases
+
+  utter_greet:
+    - text: "Hallo! Wie geht es dir?"
+
+  utter_cheer_up:
+    - text: "Oh nein, ich hoffe das können wir ändern. Ich kann dir viele Dinge aus Ulm erzählen!"
+
+  utter_did_that_help:
+    - text: "Hast du darauf Lust?"
+
+  utter_happy:
+    - text: "Hervorragend, wenn du nicht weißt, was du mich fragen kannst, frag einfach nach *Hilfe*."
+
+  utter_iamabot:
+    - text: "Ich bin kein Mensch, ich bin Spätzchen und ich kenne mich sehr gut mit den Sensordaten aus Ulm aus."
+
+  utter_show_creator:
+    - text: "Ich wurde im Rahmen der Masterarbeit von Fabian Lette in Kooperation mit eXXcellent solutions GmbH entwickelt und erschaffen. Als Grundlage nutze ich die frei zur Verfügung stehenden Daten des Ulmer Datenhubs."
+
+  # Start and end conversation
+
+  utter_start_conversation:
+    - text: "Hallo, mein Name ist Spätzchen, mich kannst du alles bezüglich der Ulmer Datenplattform fragen."
+    - text: "Hallo, ich bin Spätzchen. Ich weiß alles über die Ulmer Datenplattform."
+    - text: "Tschilp tschilp. Mein Name lautet Spätzchen. Ich kenne mich sehr gut mit den Ulmer Sensordaten aus."
+
+  utter_start_conversation_2:
+    - text: "Frage mich zum Beispiel: *Ist der Radweg an der Donau überflutet?*"
+    - text: "Du kannst mich zum Beispiel fragen: *Wie hoch ist der Wasserlevel der Donau?*"
+    - text: "Frag mich doch beispielsweise einfach: *Wie viele Besucher hat die Ulmer Innenstadt?*"
+
+  utter_start_conversation_3:
+    - text: "Wenn du nicht weiter weißt, frag einfach nach *Hilfe*."
+
+  utter_end_conversation:
+    - text: "Auf Wiedersehen. Falls du noch mehr Interesse an Daten aus Ulm hast, kannst du uns über folgende Wege erreichen und Fragen stellen:"
+
+  utter_end_conversation_mail:
+    - text: "E-Mail: [datenhub@ulm.de](mailto:datenhub@ulm.de)"
+
+  utter_end_conversation_tel:
+    - text: "Tel.Nr.: [+49 731 161-1003](tel:00497311611003)"
+
+  utter_end_conversation_no_interest:
+    - text: "Schade, das tut mir Leid. Falls du doch noch mehr Interesse an Daten aus Ulm hast, kannst du uns stets über folgende Wege erreichen und Fragen stellen:"
+
+  utter_offer_more_help:
+    - text: "Kann ich sonst noch etwas für dich tun?"
+    - text: "Wie kann ich dir sonst noch behilflich sein?"
+    - text: "Hast du noch weitere Fragen?"
+
+  # Get help
+
+  utter_please_rephrase:
+    - text: "Das habe ich leider nicht verstanden, kannst du deine Frage anders formulieren? Wenn du nicht weiter weißt, frag einfach nach *Hilfe*"
+      buttons:
+        - title: "Hilfe"
+          payload: "/help_intent"
+    - text: "Entschuldigung, das kenne ich nicht. Frag mich einfach nach Hilfe, wenn du nicht weiter weißt."
+      buttons:
+        - title: "Hilfe"
+          payload: "/help_intent"
+
+  utter_help:
+    - text: "Mein Name ist Spätzchen und ich kann dir einiges über Ulm erzählen. Durch mich kannst du alle neuen
+            Sensordaten der Stadt Ulm einsehen, sowie statistische Berechnungen generieren lassen. Du kannst mich zum
+            Beispiel fragen:
+            *Hat sich an den Datensätzen etwas verändert?*
+            Ich kann außerdem statistische Auswertungen zu einigen Datensätzen erstellen. Frage hierbei einfach nach:
+            *Statistik*.
+            Verfügbare Datensätze kann ich nach *Kategorien* und *Tags* sortieren.
+            Möchtest du sehen, zu welchen Kategorien ich dir etwas erzählen kann?"
+      buttons:
+        - title: "Ja"
+          payload: "/yes_help_intent"
+        - title: "Nein"
+          payload: "/no_help_intent"
+
+  utter_no_help_answer:
+    - text: "Alles klar! Viel Spaß noch!"
+
+
+  # Feedback responses
+
+  utter_feedback_satisfaction:
+    - text: "Das freut mich zu hören. Wie zufrieden bist du mit mir?"
+
+  utter_feedback_dissatisfaction:
+    - text: "Oh nein, das tut mir Leid. Bitte sag mir, wie unzufrieden du bist."
+
+  utter_feedback_explanation:
+    - text: "Nenne mir bitte eine Zahl zwischen 1 und 10. Dabei bedeutet 1 sehr unzufrieden und 10 sehr zufrieden."
+
+  utter_submit_feedback_form:
+    - text: "Vielen Dank für deine Bewertung und deinen Kommentar!"
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

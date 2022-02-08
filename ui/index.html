@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Spätzchen</title>
+</head>
+<body>
+<div class="legal">
+    <a class="legal-a" href="https://exxcellent.de/impressum" target="_blank">Impressum</a>
+    <a class="legal-a" href="https://exxcellent.de/datenschutzerklaerung" target="_blank">Datenschutz</a>
+</div>
+<script>!(function () {
+    let e = document.createElement("script"),
+        t = document.head || document.getElementsByTagName("head")[0];
+    (e.src =
+        "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default(
+                {
+                    customData: {language: "de"},
+                    socketUrl: "http://localhost:5005",
+                    initPayload: "/start_conversation",
+                    title: "Spätzchen",
+                    subtitle: "Dein Ulmer Daten-Assistent",
+                    inputTextFieldHint: "Schreibe mir eine Nachricht",
+                    displayUnreadCount: true,
+                    profileAvatar: "bird.svg",
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+})();
+</script>
+<style>
+    .rw-conversation-container .rw-header {
+        background-color: #674ea7;
+    }
+    .rw-launcher {
+        background-color: #674ea7;
+    }
+    .rw-launcher:hover {
+        cursor: pointer;
+    }
+    .rw-conversation-container .rw-client {
+        background-color: #674ea7;
+    }
+    .rw-with-avatar > .rw-avatar {
+        filter: invert(1)
+    }
+    .rw-conversation-container .rw-reply {
+        background-color: unset;
+        color: #674ea7;
+        border-color: #674ea7;
+    }
+    .rw-messages-container a {
+        color: black;
+    }
+    @media screen and (min-width:800px) {
+        .rw-group-message.rw-from-response .rw-message:not(:first-child):not(:only-child).rw-with-avatar {
+            margin-left: 10px;
+        }
+    }
+    .legal {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        margin: 0 0 1em 1em;
+    }
+    .legal-a:link, .legal-a:visited{
+        text-decoration: none;
+        color: #575757;
+        font-style: italic;
+        font-family: Inter,sans-serif;
+        font-size: 9pt;
+    }
+</style>
+</body>
+</html>
