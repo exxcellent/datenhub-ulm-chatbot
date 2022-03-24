@@ -9,7 +9,9 @@ import matplotlib.dates as mdates
 COLOR = "#674ea7"
 DATE_FORMAT = "%d.%m.%Y"
 
-
+"""
+    Enkodiert gesetzte Plots in base64 
+"""
 def encode_plot():
     io_bytes = io.BytesIO()
     plt.savefig(io_bytes, format="png")
@@ -18,11 +20,15 @@ def encode_plot():
 
     return str(base64_boxplot)[2:-1]
 
-
+"""
+    Berechnet Durchschnitt, Median sowie Standardabweichung der Daten
+"""
 def calculate_standard_methods(data):
     return [data.mean().round(1)["count"], data.median().round(1)["count"], data.std().round(1)["count"]]
 
-
+"""
+    Erstellt aus den Daten ein Boxplot
+"""
 def create_boxplot(data, x_label):
     fig, ax = plt.subplots()
 
@@ -33,7 +39,9 @@ def create_boxplot(data, x_label):
 
     return encode_plot()
 
-
+"""
+    Erstellt aus den Daten ein Liniendiagramm
+"""
 def create_line_diagram(data, y_label):
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -46,7 +54,9 @@ def create_line_diagram(data, y_label):
 
     return encode_plot()
 
-
+"""
+    Erstellt aus den Daten ein Plot zur Anomalienanalyse nach Matrix Profile
+"""
 def create_discord_plot(data):
     profile = mp.compute(data['count'].values, 8)  # 8 hour profile
 
@@ -69,7 +79,9 @@ def create_discord_plot(data):
 
     return encode_plot()
 
-
+"""
+    Lädt die base64 plots zum Image Provider Service hoch, via REST API
+"""
 def upload_pictures(self, images_byte64):
     image_uris = []
     for i in images_byte64:
