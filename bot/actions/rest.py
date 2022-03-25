@@ -5,31 +5,44 @@ from statistics import median
 import numpy as np
 import pandas as pd
 
-
+"""
+    Konvertiert einen datetime timetamp in utc
+"""
 def convert_to_utc(timestamp):
     local = pytz.timezone("Europe/Berlin")
     local_dt = local.localize(timestamp, is_dst=None)
     return local_dt.astimezone(pytz.utc)
 
-
+"""
+    Konvertiert einen datetime timestamo in einen utc zulu string
+"""
 def convert_to_utc_zulu_string(timestamp):
     return str(convert_to_utc(timestamp))[:-6].replace(' ', 'T') + "Z"
 
-
+"""
+    Konvertiert einen timestamp string in einen datetime timestamp
+"""
 def str_timestamp_to_datetime(str_timestamp):
     try:
         return datetime.strptime(str_timestamp, "%Y-%m-%dT%H:%M:%S.%f")
     except ValueError:
         return datetime.strptime(str_timestamp, "%Y-%m-%dT%H:%M:%S")
 
-
+"""
+    Aggregiert Datensätze auf stündliche Basis bezogen auf den gerundeten Durchschnitt
+"""
 def resample_hourly(data):
     data = data.set_index("timestamp").sort_index()
     data = data.resample("H").mean().round()
     data.dropna(inplace=True)
     return data
 
-
+"""
+    Lädt Daten per REST API vom Datenhub. 
+    days bezieht sich auf die Zeitspanne von jetzt bis x Tage in die Vergangenheit.
+    resource_id bestimmt die Ressource vom Datenhub Server.
+    data_point_id bezieht sich auf den json key, in welchem die benötigten Daten zu finden sind.
+"""
 def get_data_from_datastore(self, days, resource_id, data_point_id):
     start_time = convert_to_utc_zulu_string(datetime.now() - timedelta(days=days))
 
@@ -52,6 +65,9 @@ class RestRequests:
         self.swagger_api = swagger_api
         self.ckan_api = ckan_api
 
+    """
+        Lädt alle Kategorien, die mindestens einen Datensatz haben
+    """
     def get_categories(self):
         abbrev_categories = requests.get(self.ckan_api + "group_list").json()["result"]
 
@@ -63,6 +79,9 @@ class RestRequests:
 
         return categories_dict
 
+    """
+        Lädt alle Datensätze einer Kategorie
+    """
     def get_dataset_by_category(self, category_index):
         datasets_json = requests.get(self.ckan_api + "group_package_show?id=" + category_index).json()[
             "result"]
@@ -72,9 +91,15 @@ class RestRequests:
 
         return datasets
 
+    """
+        Lädt den beschreibenden Text eines Datensatzes
+    """
     def get_description_of_dataset(self, selected_dataset):
         return requests.get(self.ckan_api + "package_show?id=" + selected_dataset).json()["result"]["notes"]
 
+    """
+        Lädt alle Tags
+    """
     def get_all_tags(self):
         tags_json = requests.get(self.ckan_api + "tag_list?all_fields=true").json()["result"]
         tags = {}
@@ -83,6 +108,9 @@ class RestRequests:
 
         return tags
 
+    """
+        Lädt alle Datensätze eines Tags
+    """
     def get_datasets_by_tag(self, tag_name):
         datasets_json = requests.get(self.ckan_api + "package_search?fq=tags:" + tag_name).json()["result"]["results"]
         datasets = {}
@@ -91,6 +119,9 @@ class RestRequests:
 
         return datasets
 
+    """
+        Lädt veränderte und neue Datensätze in jeweils eine dictionary
+    """
     def get_news(self, days):
         number_of_all_datasets = str(len(requests.get(self.swagger_api + "datasets").json()))
 
@@ -112,6 +143,9 @@ class RestRequests:
         return new_datasets, modified_datasets
 
     # lorapark_hochwassersensor
+    """
+        Lädt den aktuellen Wasserstand der Donau und wandelt die Höhe in Meter um.
+    """
     def get_water_level_danube_meters(self):
 
         water_level = requests.get(
@@ -120,6 +154,10 @@ class RestRequests:
 
         return float(water_level) / 1000
 
+    """
+        Überprüft, ob die Donau Hochwasser hat.
+        Wenn Wasserhöhenmedian der letzten 2 bis 4 Stunden - Wasserhöhenmedium der letzten Stunden >= 1 Meter ist, ist Hochwasser.
+    """
     def is_bike_path_flooded(self):
 
         four_hours_ago = datetime.now() - timedelta(hours=4)
@@ -146,6 +184,9 @@ class RestRequests:
 
         return True if median(water_level_last_4_to_2_hours) - median(water_level_last_2_hours) >= 1000 else False
 
+    """
+        Lädt aktuelle Anzahl an Besucher der Innenstadt
+    """
     def get_current_visitors_downtown_ulm(self):
         return int(requests.get(
             self.swagger_api + "datasets/besuchertrend-ulmer-innenstadt/resources/besuchertrend-ulmer-innenstadt"

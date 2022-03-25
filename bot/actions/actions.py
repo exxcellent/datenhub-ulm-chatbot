@@ -15,7 +15,10 @@ rest = RestRequests("https://datenhub.ulm.de/api/v1/", "https://datenhub.ulm.de/
 db = DatabaseRequest("feedback.json")
 calc = StatisticalCalculations("https://api.imgbb.com/1/upload", "")  # todo: add valid imgbb api key
 
-
+"""
+    Custom action SaveFeedbackAction:
+    Persistiert Feedback des Nutzers. Die Daten werden direkt aus dem Tracker abgerufen.
+"""
 class SaveFeedbackAction(Action):
 
     def name(self) -> Text:
@@ -28,7 +31,11 @@ class SaveFeedbackAction(Action):
 
         return [SlotSet("feedback_valuation", None), SlotSet("feedback_comment", None)]
 
-
+"""
+    Form validator ValidateFeedbackForm:
+    Validiert nur die Feedback Zahl zwischen 1 und 10. 1 >= x <= 10
+    Kann um die Methode für das Kommentarfeld erweitert werden
+"""
 class ValidateFeedbackForm(FormValidationAction):
 
     def name(self) -> Text:
@@ -53,7 +60,11 @@ class ValidateFeedbackForm(FormValidationAction):
             dispatcher.utter_message(text="Diese Angabe ist keine Zahl. Bitte nenne eine Zahl zwischen 1 und 10.")
             return {"feedback_valuation": None}
 
-
+"""
+    Custom action YesHelpAction:
+    Folgt auf den Button "Yes" nach Hilfe action
+    Zeigt alle verfügbaren Kategorien in Form einer buttons list an. 
+"""
 class YesHelpAction(Action):
 
     def name(self) -> Text:
@@ -71,7 +82,10 @@ class YesHelpAction(Action):
 
         return []
 
-
+"""
+    Custom action DisplayDatasetByCategoryAction:
+    Zeigt alle Datensätze die einer Kategorie zugewiesen wurden, in Form einer buttons list an.
+"""
 class DisplayDatasetByCategoryAction(Action):
 
     def name(self) -> Text:
@@ -95,7 +109,10 @@ class DisplayDatasetByCategoryAction(Action):
 
         return []
 
-
+"""
+    Custom action DisplayDatasetDescriptionAction:
+    Zeigt den beschreibenden Text eines Datensatzes an, welcher durch DisplayDatasetByCategoryAction ausgewählt wurde
+"""
 class DisplayDatasetDescriptionAction(Action):
 
     def name(self) -> Text:
@@ -113,7 +130,10 @@ class DisplayDatasetDescriptionAction(Action):
 
         return []
 
-
+"""
+    Custom action ShowTagAction
+    Ähnlich wie YesHelpAction, bloß für tags. Alphabetisch sortiert. Nur 10 tags werden angezeigt. Button "Mehr tags" zeigt 10 nächste Tags an
+"""
 class ShowTagAction(Action):
 
     def name(self) -> Text:
@@ -142,7 +162,10 @@ class ShowTagAction(Action):
                      "Kategorien sortierst.")
             return [SlotSet("tags_iteration", 0)]
 
-
+"""
+    Custom action DisplayDatasetByTagAction:
+    Zeigt alle Datensätze, die mit gewählten tag verknüpft sind
+"""
 class DisplayDatasetByTagAction(Action):
 
     def name(self) -> Text:
@@ -166,7 +189,10 @@ class DisplayDatasetByTagAction(Action):
 
         return [SlotSet("tags_iteration", 0)]
 
-
+"""
+    Methode:
+    Baut den String für die News Action aus neuen und modifizierten Datensätzen
+"""
 def build_news_string(new_datasets, modified_datasets, checked_days):
     news_output = ""
     if len(new_datasets) != 0:
@@ -182,7 +208,10 @@ def build_news_string(new_datasets, modified_datasets, checked_days):
 
     return news_output
 
-
+"""
+    Custom action ShowNewsAction:
+    Überprüft, welche Datensätze in den letzten 7 Tagen modifiert oder hinzugefügt wurden. Wenn == 0, werden auf Wunsch die letzten 30 Tage überprüft.
+"""
 class ShowNewsAction(Action):
 
     def name(self) -> Text:
@@ -215,6 +244,10 @@ class ShowNewsAction(Action):
 
 
 # lorapark_hochwassersensor
+"""
+    Custom Action ShowCurrentWaterLevelDanubeAction:
+    Gibt den aktuellen Wasserstand der Donau wieder.
+"""
 class ShowCurrentWaterLevelDanubeAction(Action):
     def name(self) -> Text:
         return "show_current_water_level_danube_action"
@@ -227,7 +260,10 @@ class ShowCurrentWaterLevelDanubeAction(Action):
 
         return []
 
-
+"""
+    Custom action IsBikePathFloodedAction:
+    Gibt wieder, ob der Fuß- und Fahrradweg überflutet ist (Rechnung erfolgt in rest Klasse)
+"""
 class IsBikePathFloodedAction(Action):
     def name(self) -> Text:
         return "is_bike_path_flooded_action"
@@ -246,7 +282,10 @@ class IsBikePathFloodedAction(Action):
 
         return []
 
-
+"""
+    Custom action ShowCurrentVisitorsDowntownUlmAction:
+    Gibt die Anzahl an aktuellen Besuchern der Innenstadt wieder.
+"""
 class ShowCurrentVisitorsDowntownUlmAction(Action):
 
     def name(self) -> Text:
@@ -261,7 +300,10 @@ class ShowCurrentVisitorsDowntownUlmAction(Action):
 
         return []
 
-
+"""
+    Custom action ShowRandomFact:
+    Gibt random einen der folgenden drei custom actions wieder: ShowCurrentVisitorsDowntownUlmAction, IsBikePathFloodedAction und ShowCurrentWaterLevelDanubeAction
+"""
 class ShowRandomFact(Action):
 
     def name(self) -> Text:
@@ -294,7 +336,10 @@ def get_available_datasets():
     "49631b61-cda1-46af-b58c-f1e4965f0bd4": "Fahrrad-Dauerzählstelle am Blautalradweg"}
 """
 
-
+"""
+    Custom action CallForAnalyticalGraphAction:
+    Gibt alle verfügbaren Datensätze wieder, welche für die analytischen Auswertungen verwendet werden können.
+"""
 class CallForAnalyticalGraphAction(Action):
 
     def name(self) -> Text:
@@ -313,7 +358,10 @@ class CallForAnalyticalGraphAction(Action):
 
         return []
 
-
+"""
+    Custom action GraphAskForTimeRange:
+    Gibt voreingestellte Zeiträume wieder, für analytische Auswertungen.
+"""
 class GraphAskForTimeRange(Action):
     def name(self) -> Text:
         return "graph_ask_for_time_range_action"
@@ -329,7 +377,11 @@ class GraphAskForTimeRange(Action):
         dispatcher.utter_message("Daten aus welchem Zeitraum sollen berücksichtigt werden?", buttons=buttons)
         return []
 
-
+"""
+    Custom action CreateGraphsAction:
+    Ruft Funktionen der Klasse statistical_calculations auf, um Grafiken zu generieren.
+    Am Ende werden die erstellten Grafiken sowie der beschreibende Text für die Standardberechnungen wiedergegeben
+"""
 class CreateGraphsAction(Action):
     def name(self) -> Text:
         return "create_graphs_action"

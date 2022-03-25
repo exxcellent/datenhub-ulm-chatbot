@@ -11,6 +11,9 @@ class DatabaseRequest:
         self.db = TinyDB(db_location)
         self.Feedback = Query()
 
+    """
+        Methode zur Persistenz des User Feedbacks per tinydb.
+    """
     def save_feedback(self, user_id, valuation, comment):
         if not exists(user_id, self.db, self.Feedback):
             self.db.insert({"user_id": user_id, "valuation": valuation, "comment": comment})
